@@ -1,0 +1,4 @@
+items:
+  changebiomeItem:
+    itemName: Change biome
+    itemLore: Changes the current biome of the chunk.

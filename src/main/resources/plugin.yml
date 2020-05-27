@@ -1,0 +1,14 @@
+name: SpecialItems
+main: com.github.Viduality.SpecialItems.SpecialItems
+version: '${minecraft.plugin.version}'
+author: Viduality
+api-version: '1.15'
+depend: [ProtocolLib]
+
+
+commands:
+  SpecialItems:
+    description: A
+    usage: /specialitems
+    permission: SpecialItems.SpecialItems
+    permission-message: You don't have permission!
