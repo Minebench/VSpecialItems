@@ -55,10 +55,20 @@ public class SpecialItems extends JavaPlugin {
     public void onDisable() {
     }
 
+    /**
+     * Provides an instance of the plugin.
+     * @return  instance of SpecialItems.
+     */
     public static SpecialItems getInstance() {
         return instance;
     }
 
+    /**
+     * Sends a message to a command sender.
+     *
+     * @param target  The target of the command.
+     * @param message  The String from the lang config that should be used.
+     */
     public void sendMessage(CommandSender target, String message) {
         ConfigHandler.messagefromString(target, message);
     }

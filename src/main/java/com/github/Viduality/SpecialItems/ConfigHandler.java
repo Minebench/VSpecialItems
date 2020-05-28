@@ -34,10 +34,14 @@ public class ConfigHandler {
 
     private static final SpecialItems plugin = SpecialItems.getInstance();
 
-    private static StoredConfiguration specialItemsConfig;
-
     private static StoredConfiguration messagesConfig;
 
+    /**
+     * Sends a message to a command sender.
+     *
+     * @param sender  The sender of the command.
+     * @param string  The String from the lang config that should be used.
+     */
     public static void messagefromString(CommandSender sender, String string) {
         if (sender == null) {
             return;
@@ -49,21 +53,39 @@ public class ConfigHandler {
         sender.sendMessage(new MineDown(message).toComponent());
     }
 
+    /**
+     * Reloads all configs.
+     */
     public static void reloadAllConfigs() {
         loadConfig();
-        specialItemsConfig = loadConfig("SpecialItems", false);
         messagesConfig = loadConfig("Languages", "", true);
     }
 
+    /**
+     * Loads a config.
+     * @param name       The name of the config.
+     * @param languages  boolean if the config is a languages file.
+     * @return           Returns a StoredConfiguration.
+     */
     private static StoredConfiguration loadConfig(String name, boolean languages) {
         return loadConfig(name, name, languages);
     }
 
+    /**
+     * Loads all configs.
+     */
     private static void loadConfig() {
         plugin.saveDefaultConfig();
         plugin.reloadConfig();
     }
 
+    /**
+     * Loads a config.
+     * @param folderName  The name of the folder, the config gets saved.
+     * @param configName  The name of the config.
+     * @param languages   boolean if the config is a languages file.
+     * @return            Returns a StoredConfiguration.
+     */
     private static StoredConfiguration loadConfig(String folderName, String configName, boolean languages) {
         File folder = new File(plugin.getDataFolder(), folderName);
         File file;
@@ -108,14 +130,18 @@ public class ConfigHandler {
         return config;
     }
 
+    /**
+     * Checks the plugins language.
+     * @return  The language of the plugin (eng or ger).
+     */
     private static String getLanguage() {
         return plugin.getConfig().getString("Language", "eng").toLowerCase();
     }
 
-    public static FileConfiguration getSpecialItemsConfig1() {
-        return specialItemsConfig;
-    }
-
+    /**
+     * Returns the notes config.
+     * @return  Notes config.
+     */
     public static FileConfiguration getNotesConfig() {
         return messagesConfig;
     }

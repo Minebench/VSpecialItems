@@ -40,54 +40,109 @@ public class SpecialItem {
     private String nameColor = "§f";
     private String loreColor = "§9";
 
+    /**
+     * Sets the name of the item.
+     * @param name  The item name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns the name of the item.
+     * @return  The name of the item.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the lore of the item.
+     * @param lore  Lore of the item.
+     */
     public void setLore(String lore) {
         this.lore = lore;
     }
 
+    /**
+     * Returns the lore of the item.
+     * @return  The lore of the item.
+     */
     public String getLore() {
         return lore;
     }
 
+    /**
+     * Sets the base item (ItemStack).
+      * @param item  ItemStack of the special item.
+     */
     public void setItem(ItemStack item) {
         this.item = item;
     }
 
+    /**
+     * Returns the base ItemStack of the special item.
+     * @return  The base ItemStack of the special item.
+     */
     public ItemStack getItem() {
         return item;
     }
 
+    /**
+     * Sets the tag for the item to identify the special item.
+     * @param tag  String tag.
+     */
     public void setTag(String tag) {
         this.tag = tag;
     }
 
+    /**
+     * Returns the tag of the item.
+     * @return  String tag of the item.
+     */
     public String getTag() {
         return tag;
     }
 
+    /**
+     * Sets the color code for the item name.
+     * Default: §f (White)
+     * @param nameColor  color code of the item name
+     */
     public void setNameColor(String nameColor) {
         this.nameColor = nameColor;
     }
 
+    /**
+     * Returns the color code of the item name.
+     * @return  String color code.
+     */
     public String getNameColor() {
         return nameColor;
     }
 
+    /**
+     * Sets the color code for the item lore.
+     * Default: §9 (Blue)
+     * @param loreColor  color code of the item lore
+     */
     public void setLoreColor(String loreColor) {
         this.loreColor = loreColor;
     }
 
+    /**
+     * Returns the color code of the item lore.
+     * @return  String color code.
+     */
     public String getLoreColor() {
         return loreColor;
     }
 
+    /**
+     * Creates the special item.
+     * Validates the item and sets default values if a param is not valid. Creates the special item.
+     * @return  ItemStack of the special item.
+     */
     public ItemStack buildItem() {
         validate();
 
