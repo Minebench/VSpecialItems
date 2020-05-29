@@ -3,12 +3,19 @@ main: com.github.Viduality.SpecialItems.SpecialItems
 version: '${minecraft.plugin.version}'
 author: Viduality
 api-version: '1.15'
-depend: [ProtocolLib]
 
 
 commands:
   SpecialItems:
-    description: A
+    description: Opens a menu with all current special items
     usage: /specialitems
-    permission: SpecialItems.SpecialItems
+    permission: SpecialItems.Command
     permission-message: You don't have permission!
+
+permissions:
+  SpecialItems.Command:
+    description: Gives access to the special items command.
+    default: op
+  SpecialItems.ChangeBiomeItemUse:
+    description: Allows to use the special item "ChangeBiome".
+    default: op

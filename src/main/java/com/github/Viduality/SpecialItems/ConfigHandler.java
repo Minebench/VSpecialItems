@@ -43,13 +43,29 @@ public class ConfigHandler {
      * @param string  The String from the lang config that should be used.
      */
     public static void messagefromString(CommandSender sender, String string) {
+        messagefromString(sender, string, null, null);
+    }
+
+    /**
+     * Sends a message with placeholders to a command sender.
+     *
+     * @param sender  The sender of the command.
+     * @param string  The String from the lang config that should be used.
+     * @param placeholder The string in the config to be replaced. For example %placeholder%.
+     * @param replacement The replacement.
+     */
+    public static void messagefromString(CommandSender sender, String string, String placeholder, String replacement) {
         if (sender == null) {
             return;
         }
 
-        String prefix = messagesConfig.getString("Prefix");
-        String message = prefix + " " + messagesConfig.getString(string);
-
+        String prefix = messagesConfig.getString("messages.Prefix");
+        String message = prefix + " " + messagesConfig.getString("messages." + string);
+        if (placeholder != null && replacement != null) {
+            if (message.contains(placeholder)) {
+                message = message.replace(placeholder, replacement);
+            }
+        }
         sender.sendMessage(new MineDown(message).toComponent());
     }
 

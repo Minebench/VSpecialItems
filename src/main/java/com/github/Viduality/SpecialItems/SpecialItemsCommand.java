@@ -18,7 +18,6 @@ package com.github.Viduality.SpecialItems;
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import de.themoep.inventorygui.GuiStorageElement;
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
 import org.bukkit.ChatColor;

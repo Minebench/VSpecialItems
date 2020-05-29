@@ -7,7 +7,7 @@ items:
   changeBiomeItem:
     itemName: "Biom-Änderung"
     itemNameColor: "§f"
-    itemLore: "Ändert das Biom in einem Chunk. Das Item wird beim Ändern des Bioms verbraucht!"
+    itemLore: "Ändert das Biom eines Chunks. Zum Benutzen auf einen Block im Chunk klicken. Das Item wird beim Ändern des Bioms verbraucht!"
     itemLoreColor: "§9"
     inventoryName: "Klicke um das Biom zu ändern!"
     biomesColor: "§c"
@@ -41,3 +41,9 @@ items:
       BIRCH_FOREST: "Birkenwald"
       DARK_FOREST: "Dichter Wald"
       BAMBOO_JUNGLE: "Bambusdschungel"
+messages:
+  Prefix: "§7[§9Special Items§7]"
+  ChangedBiome: "§aBiom erfolgreich zu §c\"%biome%\"§a geändert!"
+  NoPermissionCommand: "§cDu hast keine Berechtigung für diesen Befehl!"
+  NoPermissionMechanic: "§cDu hast keine Berechtigung für diese Mechanik!"
+  NoPlayer: "§cDu musst ein Spieler sein um diesen Befehl auszuführen!"

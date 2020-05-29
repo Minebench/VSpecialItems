@@ -29,9 +29,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -42,6 +42,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class ChangeBiomeItem implements Listener {
 
@@ -76,36 +77,47 @@ public class ChangeBiomeItem implements Listener {
     @EventHandler
     public void onItemUse(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (event.getHand() == EquipmentSlot.OFF_HAND) {
-            Material mainHand = event.getPlayer().getInventory().getItemInMainHand().getType();
-            if (mainHand == Material.CROSSBOW) {
-                return;
-            }
-        } else if (event.getHand() == EquipmentSlot.HAND) {
-            if (event.getAction() == Action.RIGHT_CLICK_BLOCK &&
-            event.getClickedBlock() != null) {
-                Material clicked = event.getClickedBlock().getType();
-                if (clicked.isInteractable() && !event.getPlayer().isSneaking()) {
-                    return;
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (event.getHand() == EquipmentSlot.HAND) {
+                if (event.hasItem()) {
+                    if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                            .has(SpecialItems.KEY, PersistentDataType.STRING)) {
+                        if ((Objects.equals(SpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(SpecialItems.KEY, PersistentDataType.STRING), player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                                .get(SpecialItems.KEY, PersistentDataType.STRING)))) {
+                            if (!player.isSneaking()) {
+                                if (player.hasPermission("SpecialItems.ChangeBiomeItemUse")) {
+                                    InventoryGui gui = new InventoryGui(plugin, player, ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.inventoryName"), guiSetup);
+                                    gui.setFiller(new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
+                                    gui.addElements(getBiomes(event.getClickedBlock()));
+                                    gui.addElement(new GuiPageElement('f', new ItemStack(Material.ARROW), GuiPageElement.PageAction.FIRST, ConfigHandler.getNotesConfig().getString("gui.firstPage")));
+                                    gui.addElement(new GuiPageElement('p', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.PREVIOUS, ConfigHandler.getNotesConfig().getString("gui.prevPage")));
+                                    gui.addElement(new GuiPageElement('n', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.NEXT, ConfigHandler.getNotesConfig().getString("gui.nextPage")));
+                                    gui.addElement(new GuiPageElement('l', new ItemStack(Material.ARROW), GuiPageElement.PageAction.LAST, ConfigHandler.getNotesConfig().getString("gui.lastPage")));
+                                    gui.show(player);
+                                } else {
+                                    plugin.sendMessage(player, "NoPermissionMechanic");
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        } else if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (event.getHand() == EquipmentSlot.HAND) {
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        if (event.getHand() == EquipmentSlot.OFF_HAND) {
+            if (player.getInventory().getItemInMainHand().hasItemMeta()) {
                 if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
                         .has(SpecialItems.KEY, PersistentDataType.STRING)) {
-                    {
-                        if ((SpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(SpecialItems.KEY, PersistentDataType.STRING).equals(
-                                player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                                        .get(SpecialItems.KEY, PersistentDataType.STRING)
-                        ))) {
-                            InventoryGui gui = new InventoryGui(plugin, player, ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.inventoryName"), guiSetup);
-                            gui.setFiller(new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-                            gui.addElements(getBiomes(event.getClickedBlock()));
-                            gui.addElement(new GuiPageElement('f', new ItemStack(Material.ARROW), GuiPageElement.PageAction.FIRST, ConfigHandler.getNotesConfig().getString("gui.firstPage")));
-                            gui.addElement(new GuiPageElement('p', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.PREVIOUS, ConfigHandler.getNotesConfig().getString("gui.prevPage")));
-                            gui.addElement(new GuiPageElement('n', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.NEXT, ConfigHandler.getNotesConfig().getString("gui.nextPage")));
-                            gui.addElement(new GuiPageElement('l', new ItemStack(Material.ARROW), GuiPageElement.PageAction.LAST, ConfigHandler.getNotesConfig().getString("gui.lastPage")));
-                            gui.show(player);
+                    if ((SpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(SpecialItems.KEY, PersistentDataType.STRING).equals(
+                            player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                                    .get(SpecialItems.KEY, PersistentDataType.STRING)
+                    ))) {
+                        if (!player.isSneaking()) {
+                            event.setCancelled(true);
                         }
                     }
                 }
@@ -155,7 +167,7 @@ public class ChangeBiomeItem implements Listener {
         return biomes;
     }
 
-    public GuiElementGroup getBiomes(Block block) {
+    private GuiElementGroup getBiomes(Block block) {
         List<GuiElement> elements = new ArrayList<>();
         for (Biome biome : biomes) {
             ItemStack item = new ItemStack(Material.GRASS_BLOCK, 1);
@@ -178,6 +190,7 @@ public class ChangeBiomeItem implements Listener {
                         player.sendChunkChange(c);
                         player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
                         player.closeInventory();
+                        plugin.sendMessage(player, "ChangedBiome", "%biome%", ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.name()));
                         return true;
                     }));
         }
@@ -186,7 +199,7 @@ public class ChangeBiomeItem implements Listener {
         return new GuiElementGroup('e', guiElements);
     }
 
-    String[] guiSetup = {
+    private final String[] guiSetup = {
             "eeeeeeeee",
             "  fpdnl  "
     };

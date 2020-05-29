@@ -73,4 +73,16 @@ public class SpecialItems extends JavaPlugin {
         ConfigHandler.messagefromString(target, message);
     }
 
+    /**
+     * Sends a message to a command sender.
+     *
+     * @param target  The target of the command.
+     * @param message  The String from the lang config that should be used.
+     * @param placeholder  The string in the config to be replaced. For example %placeholder%.
+     * @param replacement  The replacement.
+     */
+    public void sendMessage(CommandSender target, String message, String placeholder, String replacement) {
+        ConfigHandler.messagefromString(target, message, placeholder, replacement);
+    }
+
 }
