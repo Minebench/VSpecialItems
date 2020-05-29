@@ -1,7 +1,7 @@
-package com.github.Viduality.SpecialItems;
+package com.github.Viduality.VSpecialItems;
 
 /*
- * SpecialItems
+ * VSpecialItems
  * Copyright (C) 2020, Viduality
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ import java.io.InputStreamReader;
 
 public class ConfigHandler {
 
-    private static final SpecialItems plugin = SpecialItems.getInstance();
+    private static final VSpecialItems plugin = VSpecialItems.getInstance();
 
     private static StoredConfiguration messagesConfig;
 

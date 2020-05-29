@@ -1,7 +1,7 @@
-package com.github.Viduality.SpecialItems;
+package com.github.Viduality.VSpecialItems;
 
 /*
- * SpecialItems
+ * VSpecialItems
  * Copyright (C) 2020, Viduality
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@ package com.github.Viduality.SpecialItems;
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.github.Viduality.SpecialItems.Items.ChangeBiomeItem;
+import com.github.Viduality.VSpecialItems.Items.ChangeBiomeItem;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
@@ -27,9 +27,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
-public class SpecialItems extends JavaPlugin {
+public class VSpecialItems extends JavaPlugin {
 
-    private static SpecialItems instance;
+    private static VSpecialItems instance;
 
     public static NamespacedKey KEY;
 
@@ -38,13 +38,13 @@ public class SpecialItems extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        KEY = new NamespacedKey(this, "SpecialItem");
+        KEY = new NamespacedKey(this, "VSpecialItem");
         specialItems = new HashMap<>();
 
         ConfigHandler.reloadAllConfigs();
 
         SpecialItemsCommand specialItemsCommand = new SpecialItemsCommand(this);
-        getCommand("SpecialItems").setExecutor(specialItemsCommand);
+        getCommand("VSpecialItems").setExecutor(specialItemsCommand);
 
         final PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new ChangeBiomeItem(), this);
@@ -59,7 +59,7 @@ public class SpecialItems extends JavaPlugin {
      * Provides an instance of the plugin.
      * @return  instance of SpecialItems.
      */
-    public static SpecialItems getInstance() {
+    public static VSpecialItems getInstance() {
         return instance;
     }
 

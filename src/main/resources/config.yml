@@ -1,7 +1,10 @@
-##### Configuration file for SpecialItems. #####
+##### Configuration file for VSpecialItems. #####
 
+### eng(English) or ger(German) ###
 Language: eng
 
+### You can add biomes simply by adding them to the list. ###
+### Don't forget to set a custom name for the biome in the languages file! ###
 changeBiomeItem:
   item: Stick
   biomes:

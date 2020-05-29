@@ -1,7 +1,7 @@
-package com.github.Viduality.SpecialItems;
+package com.github.Viduality.VSpecialItems;
 
 /*
- * SpecialItems
+ * VSpecialItems
  * Copyright (C) 2020, Viduality
  *
  * This program is free software: you can redistribute it and/or modify
@@ -159,7 +159,7 @@ public class SpecialItem {
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         PersistentDataContainer dataContainer = itemMeta.getPersistentDataContainer();
-        dataContainer.set(SpecialItems.KEY, PersistentDataType.STRING, getTag());
+        dataContainer.set(VSpecialItems.KEY, PersistentDataType.STRING, getTag());
 
         item.setItemMeta(itemMeta);
         return item;

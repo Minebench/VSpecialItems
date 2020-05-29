@@ -1,7 +1,7 @@
-package com.github.Viduality.SpecialItems;
+package com.github.Viduality.VSpecialItems;
 
 /*
- * SpecialItems
+ * VSpecialItems
  * Copyright (C) 2020, Viduality
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,11 +31,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class SpecialItemsCommand implements CommandExecutor {
 
-    private final SpecialItems plugin = SpecialItems.getInstance();
+    private final VSpecialItems plugin = VSpecialItems.getInstance();
 
-    private SpecialItems specialItemsCommand;
+    private VSpecialItems specialItemsCommand;
 
-    public SpecialItemsCommand(SpecialItems specialItemsCommand) {
+    public SpecialItemsCommand(VSpecialItems specialItemsCommand) {
         this.specialItemsCommand = specialItemsCommand;
     }
 
@@ -43,12 +43,12 @@ public class SpecialItemsCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (cmd.getName().equalsIgnoreCase("specialitems")) {
-                if (player.hasPermission("SpecialItems.Command")) {
+            if (cmd.getName().equalsIgnoreCase("vspecialitems")) {
+                if (player.hasPermission("VSpecialItems.Command")) {
                     InventoryGui gui = new InventoryGui(plugin, player, ChatColor.RED + "Special Items", guiSetup);
                     gui.setFiller(new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
                     gui.addElement(new StaticGuiElement('c',
-                            new ItemStack(SpecialItems.specialItems.get("ChangeBiomeItem")),
+                            new ItemStack(VSpecialItems.specialItems.get("ChangeBiomeItem")),
                             click -> false
                     ));
                     gui.show(player);

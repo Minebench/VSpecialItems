@@ -1,7 +1,7 @@
-package com.github.Viduality.SpecialItems;
+package com.github.Viduality.VSpecialItems;
 
 /*
- * SpecialItems
+ * VSpecialItems
  * Copyright (C) 2020, Viduality
  *
  * This program is free software: you can redistribute it and/or modify

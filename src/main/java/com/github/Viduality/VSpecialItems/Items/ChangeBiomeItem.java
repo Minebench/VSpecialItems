@@ -1,7 +1,7 @@
-package com.github.Viduality.SpecialItems.Items;
+package com.github.Viduality.VSpecialItems.Items;
 
 /*
- * SpecialItems
+ * VSpecialItems
  * Copyright (C) 2020, Viduality
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,9 @@ package com.github.Viduality.SpecialItems.Items;
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.github.Viduality.SpecialItems.ConfigHandler;
-import com.github.Viduality.SpecialItems.SpecialItem;
-import com.github.Viduality.SpecialItems.SpecialItems;
+import com.github.Viduality.VSpecialItems.ConfigHandler;
+import com.github.Viduality.VSpecialItems.SpecialItem;
+import com.github.Viduality.VSpecialItems.VSpecialItems;
 import de.themoep.inventorygui.*;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
@@ -46,7 +46,7 @@ import java.util.Objects;
 
 public class ChangeBiomeItem implements Listener {
 
-    private final SpecialItems plugin = SpecialItems.getInstance();
+    private final VSpecialItems plugin = VSpecialItems.getInstance();
 
     private final String invName = ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.inventoryName");
 
@@ -60,7 +60,7 @@ public class ChangeBiomeItem implements Listener {
         changeBiomeItem.setLore(ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.itemLore"));
         changeBiomeItem.setLoreColor(ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.itemLoreColor"));
         changeBiomeItem.setItem(getItem());
-        SpecialItems.specialItems.put("ChangeBiomeItem", changeBiomeItem.buildItem());
+        VSpecialItems.specialItems.put("ChangeBiomeItem", changeBiomeItem.buildItem());
     }
 
     private ItemStack getItem() {
@@ -81,11 +81,11 @@ public class ChangeBiomeItem implements Listener {
             if (event.getHand() == EquipmentSlot.HAND) {
                 if (event.hasItem()) {
                     if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                            .has(SpecialItems.KEY, PersistentDataType.STRING)) {
-                        if ((Objects.equals(SpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(SpecialItems.KEY, PersistentDataType.STRING), player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                                .get(SpecialItems.KEY, PersistentDataType.STRING)))) {
+                            .has(VSpecialItems.KEY, PersistentDataType.STRING)) {
+                        if ((Objects.equals(VSpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(VSpecialItems.KEY, PersistentDataType.STRING), player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                                .get(VSpecialItems.KEY, PersistentDataType.STRING)))) {
                             if (!player.isSneaking()) {
-                                if (player.hasPermission("SpecialItems.ChangeBiomeItemUse")) {
+                                if (player.hasPermission("VSpecialItems.ChangeBiomeItemUse")) {
                                     InventoryGui gui = new InventoryGui(plugin, player, ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.inventoryName"), guiSetup);
                                     gui.setFiller(new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
                                     gui.addElements(getBiomes(event.getClickedBlock()));
@@ -111,10 +111,10 @@ public class ChangeBiomeItem implements Listener {
         if (event.getHand() == EquipmentSlot.OFF_HAND) {
             if (player.getInventory().getItemInMainHand().hasItemMeta()) {
                 if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                        .has(SpecialItems.KEY, PersistentDataType.STRING)) {
-                    if ((SpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(SpecialItems.KEY, PersistentDataType.STRING).equals(
+                        .has(VSpecialItems.KEY, PersistentDataType.STRING)) {
+                    if ((VSpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(VSpecialItems.KEY, PersistentDataType.STRING).equals(
                             player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                                    .get(SpecialItems.KEY, PersistentDataType.STRING)
+                                    .get(VSpecialItems.KEY, PersistentDataType.STRING)
                     ))) {
                         if (!player.isSneaking()) {
                             event.setCancelled(true);
