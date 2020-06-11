@@ -27,6 +27,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -74,28 +75,30 @@ public class ChangeBiomeItem implements Listener {
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onItemUse(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (event.getHand() == EquipmentSlot.HAND) {
-                if (event.hasItem()) {
-                    if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                            .has(VSpecialItems.KEY, PersistentDataType.STRING)) {
-                        if ((Objects.equals(VSpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(VSpecialItems.KEY, PersistentDataType.STRING), player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                                .get(VSpecialItems.KEY, PersistentDataType.STRING)))) {
-                            if (!player.isSneaking()) {
-                                if (player.hasPermission("VSpecialItems.ChangeBiomeItemUse")) {
-                                    InventoryGui gui = new InventoryGui(plugin, player, ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.inventoryName"), guiSetup);
-                                    gui.setFiller(new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-                                    gui.addElements(getBiomes(event.getClickedBlock()));
-                                    gui.addElement(new GuiPageElement('f', new ItemStack(Material.ARROW), GuiPageElement.PageAction.FIRST, ConfigHandler.getNotesConfig().getString("gui.firstPage")));
-                                    gui.addElement(new GuiPageElement('p', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.PREVIOUS, ConfigHandler.getNotesConfig().getString("gui.prevPage")));
-                                    gui.addElement(new GuiPageElement('n', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.NEXT, ConfigHandler.getNotesConfig().getString("gui.nextPage")));
-                                    gui.addElement(new GuiPageElement('l', new ItemStack(Material.ARROW), GuiPageElement.PageAction.LAST, ConfigHandler.getNotesConfig().getString("gui.lastPage")));
-                                    gui.show(player);
-                                } else {
-                                    plugin.sendMessage(player, "NoPermissionMechanic");
+        if (!event.isCancelled()) {
+            Player player = event.getPlayer();
+            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+                if (event.getHand() == EquipmentSlot.HAND) {
+                    if (event.hasItem()) {
+                        if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                                .has(VSpecialItems.KEY, PersistentDataType.STRING)) {
+                            if ((Objects.equals(VSpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(VSpecialItems.KEY, PersistentDataType.STRING), player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
+                                    .get(VSpecialItems.KEY, PersistentDataType.STRING)))) {
+                                if (!player.isSneaking()) {
+                                    if (player.hasPermission("VSpecialItems.ChangeBiomeItemUse")) {
+                                        InventoryGui gui = new InventoryGui(plugin, player, ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.inventoryName"), guiSetup);
+                                        gui.setFiller(new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
+                                        gui.addElements(getBiomes(event.getClickedBlock()));
+                                        gui.addElement(new GuiPageElement('f', new ItemStack(Material.ARROW), GuiPageElement.PageAction.FIRST, ConfigHandler.getNotesConfig().getString("gui.firstPage")));
+                                        gui.addElement(new GuiPageElement('p', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.PREVIOUS, ConfigHandler.getNotesConfig().getString("gui.prevPage")));
+                                        gui.addElement(new GuiPageElement('n', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.NEXT, ConfigHandler.getNotesConfig().getString("gui.nextPage")));
+                                        gui.addElement(new GuiPageElement('l', new ItemStack(Material.ARROW), GuiPageElement.PageAction.LAST, ConfigHandler.getNotesConfig().getString("gui.lastPage")));
+                                        gui.show(player);
+                                    } else {
+                                        plugin.sendMessage(player, "NoPermissionMechanic");
+                                    }
                                 }
                             }
                         }
@@ -114,8 +117,7 @@ public class ChangeBiomeItem implements Listener {
                         .has(VSpecialItems.KEY, PersistentDataType.STRING)) {
                     if ((VSpecialItems.specialItems.get("ChangeBiomeItem").getItemMeta().getPersistentDataContainer().get(VSpecialItems.KEY, PersistentDataType.STRING).equals(
                             player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer()
-                                    .get(VSpecialItems.KEY, PersistentDataType.STRING)
-                    ))) {
+                                    .get(VSpecialItems.KEY, PersistentDataType.STRING)))) {
                         if (!player.isSneaking()) {
                             event.setCancelled(true);
                         }
@@ -159,7 +161,7 @@ public class ChangeBiomeItem implements Listener {
                         break;
                     }
                     if (Biome.values().length == i) {
-                        System.out.println("Could not find Biome for given String " + current + "! Check your SpecialItems.yml!");
+                        System.out.println("Could not find Biome for given String " + current + "! Check your config!");
                     }
                 }
             }
