@@ -189,7 +189,9 @@ public class ChangeBiomeItem implements Listener {
                                 }
                             }
                         }
-                        player.sendChunkChange(c);
+                        for (Player p : block.getWorld().getPlayers()) {
+                            p.sendChunkChange(c);
+                        }
                         player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
                         player.closeInventory();
                         plugin.sendMessage(player, "ChangedBiome", "%biome%", ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.name()));
