@@ -184,16 +184,18 @@ public class ChangeBiomeItem implements Listener {
                         Player player = (Player) click.getEvent().getWhoClicked();
                         for (int x = 0; x <= 15; x++) {
                             for (int z = 0; z <= 15; z++) {
-                                for (int y = 0; y <= 255; y++) {
+                                for (int y = c.getWorld().getMinHeight(); y <= c.getWorld().getMaxHeight(); y++) {
                                     c.getBlock(x, y, z).setBiome(biome);
                                 }
                             }
                         }
+                        /* TODO: implement a biome sending method again
                         try {
                             for (Player p : block.getWorld().getPlayers()) {
                                 p.sendChunkChange(c);
                             }
                         } catch (NoSuchMethodError ignored) {}
+                         */
                         player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
                         player.closeInventory();
                         plugin.sendMessage(player, "ChangedBiome", "%biome%", ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.name()));
