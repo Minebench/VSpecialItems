@@ -187,7 +187,7 @@ public class ChangeBiomeItem implements Listener {
                         Player player = (Player) click.getWhoClicked();
                         for (int x = 0; x <= 15; x++) {
                             for (int z = 0; z <= 15; z++) {
-                                for (int y = c.getWorld().getMinHeight(); y <= c.getWorld().getMaxHeight(); y++) {
+                                for (int y = c.getWorld().getMinHeight(); y < c.getWorld().getMaxHeight(); y++) {
                                     c.getBlock(x, y, z).setBiome(biome);
                                 }
                             }
