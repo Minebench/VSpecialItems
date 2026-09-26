@@ -185,7 +185,9 @@ public class ChangeBiomeItem implements Listener {
                             }
                         } catch (NoSuchMethodError ignored) {}
                          */
-                        player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                        if (player.getGameMode() != GameMode.CREATIVE) {
+                            player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                        }
                         player.closeInventory();
                         plugin.sendMessage(player, "ChangedBiome", "%biome%", ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.key().asMinimalString()));
                         return true;
