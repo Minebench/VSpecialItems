@@ -137,27 +137,6 @@ public class ChangeBiomeItem implements Listener {
         }
     }
 
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getView().getTitle().equalsIgnoreCase(invName)) {
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onInventoryDrag(InventoryDragEvent event) {
-        if (event.getView().getTitle().equalsIgnoreCase(invName)) {
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onInventory(InventoryInteractEvent event) {
-        if (event.getView().getTitle().equalsIgnoreCase(invName)) {
-            event.setCancelled(true);
-        }
-    }
-
     private List<Biome> getPossibleBiomes() {
         List<Biome> biomes = new ArrayList<>();
         List<String> biomesStrings = plugin.getConfig().getStringList("changeBiomeItem.biomes");
