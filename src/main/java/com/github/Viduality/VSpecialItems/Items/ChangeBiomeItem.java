@@ -22,6 +22,8 @@ import com.github.Viduality.VSpecialItems.ConfigHandler;
 import com.github.Viduality.VSpecialItems.SpecialItem;
 import com.github.Viduality.VSpecialItems.VSpecialItems;
 import de.themoep.inventorygui.*;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -43,6 +45,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ChangeBiomeItem implements Listener {
@@ -153,16 +156,16 @@ public class ChangeBiomeItem implements Listener {
         List<String> biomesStrings = plugin.getConfig().getStringList("changeBiomeItem.biomes");
         if (!biomesStrings.isEmpty()) {
             for (String current : biomesStrings) {
-                int i = 0;
-                for (Biome biome : Biome.values()) {
-                    i++;
-                    if (biome.name().equals(current)) {
-                        biomes.add(biome);
-                        break;
-                    }
-                    if (Biome.values().length == i) {
-                        System.out.println("Could not find Biome for given String " + current + "! Check your config!");
-                    }
+                NamespacedKey key = NamespacedKey.fromString(current.toLowerCase(Locale.ROOT));
+                if (key == null) {
+                    plugin.getLogger().severe("Could not find Biome String " + current + " is not a valid NamespacedKey! Check your config!");
+                    continue;
+                }
+                Biome biome = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME).get(key);
+                if (biome != null) {
+                    biomes.add(biome);
+                } else {
+                    plugin.getLogger().severe("Could not find Biome for given String " + current + "! Check your config!");
                 }
             }
         }
@@ -174,14 +177,14 @@ public class ChangeBiomeItem implements Listener {
         for (Biome biome : biomes) {
             ItemStack item = new ItemStack(Material.GRASS_BLOCK, 1);
             ItemMeta itemMeta = item.getItemMeta();
-            itemMeta.setDisplayName(ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomesColor") + ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.name()));
-            itemMeta.setLore(Collections.singletonList(ChatColor.BLUE + biome.name()));
+            itemMeta.setDisplayName(ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomesColor") + ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.key().asMinimalString()));
+            itemMeta.setLore(Collections.singletonList(ChatColor.BLUE + biome.key().asMinimalString()));
             item.setItemMeta(itemMeta);
             elements.add(new StaticGuiElement('b',
                     item,
                     click -> {
                         Chunk c = block.getChunk();
-                        Player player = (Player) click.getEvent().getWhoClicked();
+                        Player player = (Player) click.getWhoClicked();
                         for (int x = 0; x <= 15; x++) {
                             for (int z = 0; z <= 15; z++) {
                                 for (int y = c.getWorld().getMinHeight(); y <= c.getWorld().getMaxHeight(); y++) {
@@ -198,7 +201,7 @@ public class ChangeBiomeItem implements Listener {
                          */
                         player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
                         player.closeInventory();
-                        plugin.sendMessage(player, "ChangedBiome", "%biome%", ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.name()));
+                        plugin.sendMessage(player, "ChangedBiome", "%biome%", ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.biomes." + biome.key().asMinimalString()));
                         return true;
                     }));
         }

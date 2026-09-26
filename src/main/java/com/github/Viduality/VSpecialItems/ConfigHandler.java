@@ -19,7 +19,7 @@ package com.github.Viduality.VSpecialItems;
  */
 
 import de.themoep.minedown.MineDown;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;

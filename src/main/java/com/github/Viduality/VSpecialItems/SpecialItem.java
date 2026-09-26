@@ -155,8 +155,7 @@ public class SpecialItem {
         lore.add(ChatColor.BLUE + "SpecialItems");
         itemMeta.setLore(lore);
 
-        itemMeta.addEnchant(Enchantment.WATER_WORKER, 1, true);
-        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemMeta.setEnchantmentGlintOverride(true);
 
         PersistentDataContainer dataContainer = itemMeta.getPersistentDataContainer();
         dataContainer.set(VSpecialItems.KEY, PersistentDataType.STRING, getTag());
