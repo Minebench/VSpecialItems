@@ -2,7 +2,7 @@ name: VSpecialItems
 main: com.github.Viduality.VSpecialItems.VSpecialItems
 version: '${minecraft.plugin.version}'
 author: Viduality
-api-version: '1.15'
+api-version: '26.2'
 
 
 commands:
