@@ -56,6 +56,13 @@ public class ChangeBiomeItem implements Listener {
 
     private final List<Biome> biomes = getPossibleBiomes();
 
+    private final ItemStack fillerItem;
+
+    public ChangeBiomeItem() {
+        fillerItem = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
+        fillerItem.editMeta(meta -> meta.setHideTooltip(true));
+    }
+
     public void createItem() {
         SpecialItem changeBiomeItem = new SpecialItem();
         changeBiomeItem.setTag("ChangeBiomeItem");
@@ -92,7 +99,7 @@ public class ChangeBiomeItem implements Listener {
                                 if (!player.isSneaking()) {
                                     if (player.hasPermission("VSpecialItems.ChangeBiomeItemUse")) {
                                         InventoryGui gui = new InventoryGui(plugin, player, ConfigHandler.getNotesConfig().getString("items.changeBiomeItem.inventoryName"), guiSetup);
-                                        gui.setFiller(new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
+                                        gui.setFiller(fillerItem);
                                         gui.addElements(getBiomes(event.getClickedBlock()));
                                         gui.addElement(new GuiPageElement('f', new ItemStack(Material.ARROW), GuiPageElement.PageAction.FIRST, ConfigHandler.getNotesConfig().getString("gui.firstPage")));
                                         gui.addElement(new GuiPageElement('p', new ItemStack(Material.OAK_SIGN), GuiPageElement.PageAction.PREVIOUS, ConfigHandler.getNotesConfig().getString("gui.prevPage")));
